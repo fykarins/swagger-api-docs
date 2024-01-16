@@ -1,0 +1,81 @@
+Swagger UI biasanya digunakan untuk dokumentasi API, dan React adalah pilihan yang baik untuk membuat front-end yang responsif. Namun, saya kira ada kekeliruan dalam pertanyaan Anda, karena sepertinya Anda ingin menggunakan "Reach" yang sebenarnya adalah salah satu library React bernama "Reach UI". Jika itu yang dimaksud, saya akan memberikan contoh penggunaan React untuk membuat front-end responsif dengan Swagger UI.
+
+1. Pastikan Anda telah menginstal React dan Swagger UI di proyek Anda:
+
+```bash
+npm install react react-dom swagger-ui-react
+```
+
+2. Buat komponen React yang akan menampilkan Swagger UI:
+
+```jsx
+// File: SwaggerComponent.js
+import React from 'react';
+import SwaggerUI from 'swagger-ui-react';
+import 'swagger-ui-react/swagger-ui.css';
+
+const SwaggerComponent = () => {
+  const swaggerUrl = 'https://api.example.com/swagger.json'; // Ganti dengan URL Swagger API Anda
+
+  return (
+    <div>
+      <SwaggerUI url={swaggerUrl} />
+    </div>
+  );
+};
+
+export default SwaggerComponent;
+```
+
+3. Buat entri utama untuk aplikasi React Anda:
+
+```jsx
+// File: App.js
+import React from 'react';
+import SwaggerComponent from './SwaggerComponent';
+
+const App = () => {
+  return (
+    <div>
+      <h1>API Documentation</h1>
+      <SwaggerComponent />
+    </div>
+  );
+};
+
+export default App;
+```
+
+4. Jangan lupa untuk mengatur poin entri (entry point) React di file `index.js`:
+
+```jsx
+// File: index.js
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+);
+```
+
+5. Terakhir, pastikan Anda memiliki elemen HTML dengan ID 'root' di file HTML utama Anda:
+
+```html
+<!-- File: index.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Your React App</title>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
+```
+
+Dengan mengikuti langkah-langkah di atas, Anda dapat membuat front-end responsif menggunakan React dan menampilkan dokumentasi API menggunakan Swagger UI. Pastikan untuk menyesuaikan URL Swagger API dengan endpoint API yang ingin Anda dokumentasikan.
