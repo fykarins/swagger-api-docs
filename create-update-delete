@@ -1,0 +1,142 @@
+Langkah selanjutnya adalah mengimplementasikan operasi Insert (Create), Update, dan Delete pada API Anda. Dalam contoh berikut, saya akan menunjukkan langkah-langkahnya menggunakan Express di Node.js dan asumsi bahwa Anda sudah memiliki koneksi ke database atau penyimpanan data yang sesuai.
+
+1. **Insert (Create):**
+   Implementasikan endpoint untuk menambahkan data baru ke dalam sistem. Anda dapat menggunakan metode HTTP POST untuk operasi ini.
+
+    ```javascript
+    // todoRoutes.js
+
+    /**
+     * @swagger
+     * /todos:
+     *   post:
+     *     summary: Create a new todo
+     *     requestBody:
+     *       content:
+     *         application/json:
+     *           schema:
+     *             type: object
+     *             properties:
+     *               task:
+     *                 type: string
+     *     responses:
+     *       '201':
+     *         description: Successfully created
+     */
+    router.post('/', (req, res) => {
+      // Implementasi membuat todo baru
+      const newTodo = {
+        task: req.body.task,
+        // ... tambahkan properti lainnya sesuai kebutuhan
+      };
+
+      // Simpan data baru ke database atau penyimpanan data lainnya
+      // (disini asumsikan menggunakan array sebagai contoh)
+      // Simpan ke database atau penyimpanan data lainnya
+      // db.save(newTodo);
+
+      res.status(201).json(newTodo);
+    });
+    ```
+
+2. **Read 
+    // todoRoutes.js
+
+    /**
+     * @swagger
+     * /todos:
+     *   get:
+     *     summary: Get all todos
+     *     responses:
+     *       '200':
+     *         description: A successful response
+     */
+    router.get('/', (req, res) => {
+      // Implementasi mendapatkan semua data todos
+      // Ambil data dari database atau penyimpanan data lainnya
+      // (disini asumsikan menggunakan array sebagai contoh)
+      const allTodos = [
+        { id: 1, task: 'Task 1' },
+        { id: 2, task: 'Task 2' },
+        // ... tambahkan data lainnya
+      ];
+    
+      res.status(200).json(allTodos);
+    });
+
+3. **Update:**
+   Implementasikan endpoint untuk memperbarui data berdasarkan ID. Gunakan metode HTTP PUT atau PATCH untuk operasi ini.
+
+    ```javascript
+    // todoRoutes.js
+
+    /**
+     * @swagger
+     * /todos/{id}:
+     *   put:
+     *     summary: Update a todo by ID
+     *     parameters:
+     *       - in: path
+     *         name: id
+     *         required: true
+     *         schema:
+     *           type: string
+     *     requestBody:
+     *       content:
+     *         application/json:
+     *           schema:
+     *             type: object
+     *             properties:
+     *               task:
+     *                 type: string
+     *     responses:
+     *       '200':
+     *         description: Successfully updated
+     */
+    router.put('/:id', (req, res) => {
+      // Implementasi memperbarui todo berdasarkan ID
+      const updatedTodo = {
+        task: req.body.task,
+        // ... tambahkan properti lainnya sesuai kebutuhan
+      };
+
+      // Perbarui data di database atau penyimpanan data lainnya
+      // (disini asumsikan menggunakan array sebagai contoh)
+      // db.update(req.params.id, updatedTodo);
+
+      res.status(200).json(updatedTodo);
+    });
+    ```
+
+4. **Delete:**
+   Implementasikan endpoint untuk menghapus data berdasarkan ID. Gunakan metode HTTP DELETE untuk operasi ini.
+
+    ```javascript
+    // todoRoutes.js
+
+    /**
+     * @swagger
+     * /todos/{id}:
+     *   delete:
+     *     summary: Delete a todo by ID
+     *     parameters:
+     *       - in: path
+     *         name: id
+     *         required: true
+     *         schema:
+     *           type: string
+     *     responses:
+     *       '200':
+     *         description: Successfully deleted
+     */
+    router.delete('/:id', (req, res) => {
+      // Implementasi menghapus todo berdasarkan ID
+      // Hapus data di database atau penyimpanan data lainnya
+      // (disini asumsikan menggunakan array sebagai contoh)
+      // db.delete(req.params.id);
+
+      res.status(200).send(`Deleted todo with ID ${req.params.id}`);
+    });
+    ```
+
+Pastikan untuk menggantikan logika penyimpanan data yang saya tunjukkan dengan cara sesuai dengan proyek Anda. Anda dapat menggunakan database, penyimpanan file, atau solusi penyimpanan data lainnya sesuai kebutuhan aplikasi Anda.
