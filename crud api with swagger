@@ -1,0 +1,154 @@
+Untuk membuat sebuah API CRUD (Create, Read, Update, Delete) menggunakan REST API dengan dokumentasi menggunakan Swagger, Anda memerlukan beberapa langkah dan alat. Saya akan memberikan contoh sederhana menggunakan Node.js dengan Express sebagai kerangka kerja dan Swagger untuk dokumentasi.
+
+Pastikan Anda sudah menginstal Node.js dan npm di sistem Anda sebelum memulai. Selanjutnya, Anda dapat mengikuti langkah-langkah berikut:
+
+1. **Inisialisasi Proyek:**
+   Buat direktori baru dan masuk ke dalamnya melalui terminal. Jalankan perintah berikut untuk menginisialisasi proyek dan menginstal dependensi yang diperlukan.
+
+   ```bash
+   npm init -y
+   npm install express swagger-jsdoc swagger-ui-express body-parser
+   ```
+
+2. **Buat File Server:**
+   Buat file `server.js` dan tambahkan kode berikut:
+
+   ```javascript
+   const express = require('express');
+   const bodyParser = require('body-parser');
+   const swaggerJSDoc = require('swagger-jsdoc');
+   const swaggerUI = require('swagger-ui-express');
+
+   const app = express();
+   const port = 3000;
+
+   app.use(bodyParser.json());
+
+   // Swagger Config
+   const swaggerOptions = {
+     definition: {
+       openapi: '3.0.0',
+       info: {
+         title: 'REST API CRUD with Swagger',
+         version: '1.0.0',
+       },
+     },
+     apis: ['./routes/*.js'], // Path to the API routes
+   };
+
+   const swaggerSpec = swaggerJSDoc(swaggerOptions);
+   app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
+
+   // Routes
+   const todoRoutes = require('./routes/todoRoutes');
+   app.use('/todos', todoRoutes);
+
+   app.listen(port, () => {
+     console.log(`Server is running on port ${port}`);
+   });
+   ```
+
+3. **Buat Direktori Routes:**
+   Buat direktori `routes` dan buat file `todoRoutes.js` di dalamnya. Tambahkan kode berikut:
+
+   ```javascript
+   const express = require('express');
+   const router = express.Router();
+
+   /**
+    * @swagger
+    * /todos:
+    *   get:
+    *     summary: Get all todos
+    *     responses:
+    *       '200':
+    *         description: A successful response
+    */
+   router.get('/', (req, res) => {
+     // Implementasi mendapatkan semua data todos
+     res.send('Get all todos');
+   });
+
+   /**
+    * @swagger
+    * /todos:
+    *   post:
+    *     summary: Create a new todo
+    *     requestBody:
+    *       content:
+    *         application/json:
+    *           schema:
+    *             type: object
+    *             properties:
+    *               task:
+    *                 type: string
+    *     responses:
+    *       '200':
+    *         description: A successful response
+    */
+   router.post('/', (req, res) => {
+     // Implementasi membuat todo baru
+     res.send('Create a new todo');
+   });
+
+   /**
+    * @swagger
+    * /todos/{id}:
+    *   put:
+    *     summary: Update a todo by ID
+    *     parameters:
+    *       - in: path
+    *         name: id
+    *         required: true
+    *         schema:
+    *           type: string
+    *     requestBody:
+    *       content:
+    *         application/json:
+    *           schema:
+    *             type: object
+    *             properties:
+    *               task:
+    *                 type: string
+    *     responses:
+    *       '200':
+    *         description: A successful response
+    */
+   router.put('/:id', (req, res) => {
+     // Implementasi memperbarui todo berdasarkan ID
+     res.send(`Update todo with ID ${req.params.id}`);
+   });
+
+   /**
+    * @swagger
+    * /todos/{id}:
+    *   delete:
+    *     summary: Delete a todo by ID
+    *     parameters:
+    *       - in: path
+    *         name: id
+    *         required: true
+    *         schema:
+    *           type: string
+    *     responses:
+    *       '200':
+    *         description: A successful response
+    */
+   router.delete('/:id', (req, res) => {
+     // Implementasi menghapus todo berdasarkan ID
+     res.send(`Delete todo with ID ${req.params.id}`);
+   });
+
+   module.exports = router;
+   ```
+
+4. **Jalankan Server:**
+   Simpan perubahan dan jalankan server dengan perintah:
+
+   ```bash
+   node server.js
+   ```
+
+   Buka browser dan akses `http://localhost:3000/api-docs` untuk melihat dokumentasi Swagger. Anda akan melihat daftar endpoint dan dapat mencoba operasi CRUD melalui antarmuka Swagger.
+
+Catatan: Contoh di atas hanya menyediakan kerangka dasar. Implementasikan logika CRUD sesuai kebutuhan aplikasi Anda.
